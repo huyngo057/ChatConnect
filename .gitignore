@@ -1,0 +1,59 @@
+# Default ignored files
+/shelf/
+/workspace.xml
+# Editor-based HTTP Client requests
+/httpRequests/
+
+# Editor-specific files
+/.idea/
+*.iml
+*.ipr
+*.iws
+*.bak
+*.swp
+*.swo
+*.tmp
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+*.tm_project
+*.bk2
+*.stTheme
+*.sublime-grunt.cache
+*.komodotools
+*.buildpath
+*.project
+.settings/
+*.tm_properties
+*.esproj
+nbproject/
+*.sublime-workspace
+
+# Log files
+*.log
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# Other
+*.bak
+*.swp
+*.swo
+*.tmp
+*.sublime-project
+*.sublime-workspace
+*.komodoproject
+*.tm_project
+*.bk2
+*.stTheme
+*.sublime-grunt.cache
+*.komodotools
+*.buildpath
+*.project
+.settings/
+*.tm_properties
+*.esproj
+nbproject/
+*.sublime-workspace

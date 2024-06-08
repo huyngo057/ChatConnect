@@ -1,0 +1,29 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# 
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatConnectAPI", "ChatConnectAPI\ChatConnectAPI.csproj", "{4176E5B0-23A9-43D1-9903-0D6876A8C076}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatHub", "ChatHub\ChatHub.csproj", "{3B1A0934-B95F-4DCF-93B7-4DA46AEAF1DE}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ChatConnectData", "ChatConnectData\ChatConnectData.csproj", "{4BEC7D6B-545D-44E2-BF08-8F3121B0CA5B}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{4176E5B0-23A9-43D1-9903-0D6876A8C076}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4176E5B0-23A9-43D1-9903-0D6876A8C076}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4176E5B0-23A9-43D1-9903-0D6876A8C076}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4176E5B0-23A9-43D1-9903-0D6876A8C076}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3B1A0934-B95F-4DCF-93B7-4DA46AEAF1DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3B1A0934-B95F-4DCF-93B7-4DA46AEAF1DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3B1A0934-B95F-4DCF-93B7-4DA46AEAF1DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3B1A0934-B95F-4DCF-93B7-4DA46AEAF1DE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4BEC7D6B-545D-44E2-BF08-8F3121B0CA5B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4BEC7D6B-545D-44E2-BF08-8F3121B0CA5B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4BEC7D6B-545D-44E2-BF08-8F3121B0CA5B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4BEC7D6B-545D-44E2-BF08-8F3121B0CA5B}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
