@@ -21,4 +21,11 @@ public class RoomRepository : IRoomRepository
 	{
 		return await _context.Rooms.FindAsync(id);
 	}
+
+	public async Task<Room> CreateRoomAsync(Room room)
+	{
+		await _context.Rooms.AddAsync(room);
+		await _context.SaveChangesAsync();
+		return room;
+	}
 }

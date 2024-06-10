@@ -16,4 +16,9 @@ public class RoomService : IRoomService
 	{
 		return await _roomRepository.GetAllRoomsAsync();
 	}
+
+	public async Task<Room> CreateRoom(Room room)
+	{
+		return await _roomRepository.CreateRoomAsync(room);
+	}
 }
