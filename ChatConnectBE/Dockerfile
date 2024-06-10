@@ -5,6 +5,7 @@ EXPOSE 80
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
 COPY ["ChatConnectAPI/ChatConnectAPI.csproj", "ChatConnectAPI/"]
+COPY ["ChatConnectData/ChatConnectData.csproj", "ChatConnectData/"]   
 RUN dotnet restore "ChatConnectAPI/ChatConnectAPI.csproj"
 COPY . .
 WORKDIR "/src/ChatConnectAPI"

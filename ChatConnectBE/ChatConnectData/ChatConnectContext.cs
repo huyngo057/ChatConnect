@@ -9,5 +9,5 @@ public class ChatConnectContext : DbContext
 	{
 	}
 
-	public DbSet<Room> Rooms { get; set; }
+	public DbSet<Room?> Rooms { get; set; }
 }

@@ -1,6 +1,8 @@
-﻿namespace ChatConnectBE.Services;
+﻿using ChatConnectData.Models;
+
+namespace ChatConnectBE.Services;
 
 public interface IRoomService
 {
-	public IList<string> GetAllRoom();
+	public Task<IEnumerable<Room>> GetAllRooms();
 }

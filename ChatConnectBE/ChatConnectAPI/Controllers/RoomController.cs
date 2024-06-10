@@ -15,10 +15,10 @@ public class RoomController : Controller
 	}
 
 	[HttpGet("all")]
-	public IActionResult GetAllRooms()
+	public async Task<IActionResult> GetAllRooms()
 	{
-		var rooms = _roomService.GetAllRoom();
-		return new ObjectResult(rooms);
+		var rooms = await _roomService.GetAllRooms();
+		return Ok(rooms);
 	}
 
 	[HttpPost]

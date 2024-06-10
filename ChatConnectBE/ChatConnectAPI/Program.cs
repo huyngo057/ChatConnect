@@ -8,7 +8,6 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IRoomService, RoomService>();
-var app = builder.Build();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
@@ -20,6 +19,8 @@ if (string.IsNullOrEmpty(connectionString))
 
 // Add data services to the container
 Ioc.ConfigureServices(builder.Services, connectionString);
+
+var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
