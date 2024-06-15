@@ -16,9 +16,9 @@ builder.Services.AddCors(options =>
 			var allowedOrigins = builder.Configuration.GetSection("CORS:AllowedOrigins").Get<string[]>();
 			if (allowedOrigins != null)
 				policyBuilder.WithOrigins(allowedOrigins)
-					.AllowAnyHeader()
-					.WithMethods("GET", "POST")
-					.AllowCredentials();
+				             .AllowAnyHeader()
+				             .WithMethods("GET", "POST")
+				             .AllowCredentials();
 		});
 });
 var app = builder.Build();

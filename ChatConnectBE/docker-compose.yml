@@ -10,6 +10,16 @@ services:
       - .:/app/publish
     depends_on: 
       - db
+  chathub:
+    build:
+      context: .
+      dockerfile: ./ChatHub/Dockerfile
+    ports:
+      - "7192:7192"
+    volumes:
+      - .:/app/publish
+    depends_on:
+      - db      
   db:
     image: mysql:8.0
     environment:
