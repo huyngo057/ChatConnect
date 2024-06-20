@@ -3,7 +3,7 @@ import * as signalR from '@microsoft/signalr';
 class SignalRService {
     constructor() {
         this.connection = new signalR.HubConnectionBuilder()
-            .withUrl("https://localhost:7192/chat-hub")
+            .withUrl("http://localhost:7192/chat-hub")
             .withAutomaticReconnect()
             .build();
 

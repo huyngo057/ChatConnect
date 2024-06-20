@@ -8,7 +8,18 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 builder.Services.AddSwaggerGen();
 builder.Services.AddTransient<IRoomService, RoomService>();
-
+builder.Services.AddCors(options =>
+{
+	options.AddDefaultPolicy(
+		policyBuilder =>
+		{
+			var allowedOrigins = builder.Configuration.GetSection("CORS:AllowedOrigins").Get<string[]>();
+			if (allowedOrigins != null)
+				policyBuilder.WithOrigins(allowedOrigins)
+				             .AllowAnyHeader()
+				             .AllowCredentials();
+		});
+});
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
 if (string.IsNullOrEmpty(connectionString))
@@ -30,5 +41,6 @@ if (app.Environment.IsDevelopment())
 }
 
 app.MapControllers();
+app.UseCors();
 // app.UseHttpsRedirection();
 app.Run();

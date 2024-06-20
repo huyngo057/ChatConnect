@@ -1,4 +1,5 @@
-﻿using ChatConnectBE.Services;
+﻿using ChatConnectBE.Requests;
+using ChatConnectBE.Services;
 using ChatConnectData.Models;
 using Microsoft.AspNetCore.Mvc;
 
@@ -23,8 +24,14 @@ public class RoomController : Controller
 	}
 
 	[HttpPost("create")]
-	public async Task<IActionResult> CreateRoom([FromBody] Room room)
+	public async Task<IActionResult> CreateRoom([FromBody] CreateRoomRequest createRoomRequest)
 	{
+		var room = new Room
+		{
+			Name = createRoomRequest.Name,
+			Type = createRoomRequest.Type,
+			Description = createRoomRequest.Description
+		};
 		var createdRoom = await _roomService.CreateRoom(room);
 		return Ok(createdRoom);
 	}

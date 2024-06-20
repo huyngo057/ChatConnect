@@ -1,9 +1,10 @@
 import React from 'react';
+import RoomList from "./RoomList";
 
 const Home = () => {
     return (
         <div className="flex flex-col items-center justify-center h-screen">
-            <h1>Home page</h1>
+            <RoomList />
         </div>
     );
 }
