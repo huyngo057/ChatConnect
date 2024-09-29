@@ -1,13 +1,15 @@
-version: "3.8"
 services: 
   app:
     build:
       context: .
       dockerfile: Dockerfile
+      target: dev # Use the dev stage for hot reload
     ports:
       - "8080:8080"
     volumes:
-      - .:/app/publish
+      - .:/src/ChatConnectAPI
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Production 
     depends_on: 
       - db
   chathub:

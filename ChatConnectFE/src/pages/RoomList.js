@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from "react";
-import axios from "axios";
-import {Link, Navigate} from "react-router-dom";
+import {Navigate} from "react-router-dom";
 import {signalRService} from "../SignalRService";
+import {useAuth} from "../hooks/useAuth";
+import api from "../api";
 
 const RoomList = () => {
     const [rooms, setRooms] = useState([]);
@@ -13,7 +14,7 @@ const RoomList = () => {
     const [userName] = useState('User' + Math.floor(Math.random() * 1000));
     useEffect(() => {
         const fetchRooms = async () => {
-            const response = await axios.get('http://localhost:8080/room/all');
+            const response = await api.get('http://localhost:8080/room/all');
             setRooms(response.data);
         };
         fetchRooms().catch(error => {
@@ -24,8 +25,7 @@ const RoomList = () => {
     const createRoom = async (event) => {
         event.preventDefault();
 
-
-        axios.post('http://localhost:8080/room/create', {
+        api.post('http://localhost:8080/room/create', {
             name: roomName,
             type: roomType,
             description: roomDescription

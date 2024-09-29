@@ -4,9 +4,9 @@ using Microsoft.Extensions.Configuration;
 
 namespace ChatConnectData;
 
-public class ChatConnectDbContextFactory : IDesignTimeDbContextFactory<ChatConnectContext>
+public class ChatConnectDbContextFactory : IDesignTimeDbContextFactory<ChatConnectDbContext>
 {
-	public ChatConnectContext CreateDbContext(string[] args)
+	public ChatConnectDbContext CreateDbContext(string[] args)
 	{
 		var basePath = GetBasePath();
 
@@ -18,15 +18,15 @@ public class ChatConnectDbContextFactory : IDesignTimeDbContextFactory<ChatConne
 		                    .SetBasePath(apiProjectPath)
 		                    .AddJsonFile(appSettingsPath)
 		                    .Build();
-		var builder = new DbContextOptionsBuilder<ChatConnectContext>();
+		var builder = new DbContextOptionsBuilder<ChatConnectDbContext>();
 		var connectionString = configuration.GetConnectionString("DefaultConnection");
 		builder.UseMySql(connectionString ?? throw new InvalidOperationException(),
 			ServerVersion.AutoDetect(connectionString));
 
-		return new ChatConnectContext(builder.Options);
+		return new ChatConnectDbContext(builder.Options);
 	}
 
-	private string GetBasePath()
+	private static string GetBasePath()
 	{
 		var basePath = Directory.GetParent(Directory.GetCurrentDirectory())?.FullName;
 

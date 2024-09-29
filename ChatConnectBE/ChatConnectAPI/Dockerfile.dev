@@ -1,0 +1,18 @@
+# Base image for running the application
+FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
+WORKDIR /app
+EXPOSE 80
+ENV ASPNETCORE_ENVIRONMENT=Development
+
+# Build and SDK image
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
+WORKDIR /src
+
+# Copy the solution and project files first to cache the restore step
+COPY ./ChatConnectAPI/ChatConnectAPI.csproj ./ChatConnectAPI/
+RUN dotnet restore "./ChatConnectAPI/ChatConnectAPI.csproj"
+
+# Development stage for `dotnet watch`
+FROM build AS dev
+WORKDIR /src/ChatConnectAPI
+CMD ["dotnet", "watch", "run", "--project", "/src/ChatConnectAPI/ChatConnectAPI.csproj", "--no-launch-profile", "--urls", "http://0.0.0.0:8080"]

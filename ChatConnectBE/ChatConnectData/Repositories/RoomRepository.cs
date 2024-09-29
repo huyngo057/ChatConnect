@@ -5,27 +5,27 @@ namespace ChatConnectData.Repositories;
 
 public class RoomRepository : IRoomRepository
 {
-	private readonly ChatConnectContext _context;
+	private readonly ChatConnectDbContext _dbContext;
 
-	public RoomRepository(ChatConnectContext context)
+	public RoomRepository(ChatConnectDbContext dbContext)
 	{
-		_context = context;
+		_dbContext = dbContext;
 	}
 
 	public async Task<IEnumerable<Room>> GetAllRoomsAsync()
 	{
-		return (await _context.Rooms.ToListAsync())!;
+		return (await _dbContext.Rooms.ToListAsync())!;
 	}
 
 	public async Task<Room?> GetRoomByIdAsync(int id)
 	{
-		return await _context.Rooms.FindAsync(id);
+		return await _dbContext.Rooms.FindAsync(id);
 	}
 
 	public async Task<Room> CreateRoomAsync(Room room)
 	{
-		await _context.Rooms.AddAsync(room);
-		await _context.SaveChangesAsync();
+		await _dbContext.Rooms.AddAsync(room);
+		await _dbContext.SaveChangesAsync();
 		return room;
 	}
 }

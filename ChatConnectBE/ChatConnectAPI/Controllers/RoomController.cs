@@ -1,11 +1,13 @@
 ﻿using ChatConnectBE.Requests;
 using ChatConnectBE.Services;
 using ChatConnectData.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ChatConnectBE.Controllers;
 
 [ApiController]
+[Authorize]
 [Route("room")]
 public class RoomController : Controller
 {

@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace ChatConnectData.Migrations
 {
-    [DbContext(typeof(ChatConnectContext))]
+    [DbContext(typeof(ChatConnectDbContext))]
     [Migration("20240608072243_AddRoomTable")]
     partial class AddRoomTable
     {

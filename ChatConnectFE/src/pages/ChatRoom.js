@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import {Navigate, useSearchParams} from 'react-router-dom';
 import { signalRService } from '../SignalRService';
+import {useAuth} from "../hooks/useAuth";
 
 const ChatRoom = () => {
+    useAuth();
     const [searchParams] = useSearchParams();
     const roomName = searchParams.get('roomName');
     const userName = searchParams.get('userName');
