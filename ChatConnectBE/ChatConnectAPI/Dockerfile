@@ -7,19 +7,19 @@ ENV ASPNETCORE_ENVIRONMENT=Development
 # Build and SDK image
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 WORKDIR /src
-
-# Copy the solution and project files first to cache the restore step
-COPY ./ChatConnectAPI/ChatConnectAPI.csproj ./ChatConnectAPI/
-RUN dotnet restore "./ChatConnectAPI/ChatConnectAPI.csproj"
-
-# Copy the entire source code and build the app
-COPY . .
-WORKDIR "/src/ChatConnectAPI"
-RUN dotnet build "ChatConnectAPI.csproj" -c Release -o /app/build
+COPY ./ChatConnectAPI ./ChatConnectAPI
+COPY ./ChatConnectData ./ChatConnectData
+RUN dotnet restore "./ChatConnectAPI/ChatConnectAPI.csproj" --no-cache
 
 # Publish stage for production
-FROM build AS publish   
+FROM build AS publish 
+COPY . .
+WORKDIR /src/ChatConnectAPI
 RUN dotnet publish "ChatConnectAPI.csproj" -c Release -o /app/publish
+
+FROM build AS dev
+WORKDIR /src/ChatConnectAPI
+ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:8080"]
 
 # Final image to run the app in production
 FROM base AS final

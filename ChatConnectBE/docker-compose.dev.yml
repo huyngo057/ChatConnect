@@ -2,12 +2,12 @@ services:
   app:
     build:
       context: .
-      dockerfile: Dockerfile
-      target: devdocker-compose -f docker-compose.prod.yml up
+      dockerfile: ./ChatConnectAPI/Dockerfile
+      target: dev
     ports:
       - "8080:8080"
     volumes:
-      - .:/src/ChatConnectAPI  # Mount local source code for hot reload
+      - ./ChatConnectAPI:/src/ChatConnectAPI  # Mount local source code for hot reload
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
@@ -17,10 +17,11 @@ services:
     build:
       context: .
       dockerfile: ./ChatHub/Dockerfile
+      target: dev
     ports:
       - "7192:7192"
     volumes:
-      - ./ChatHub:/app/ChatHub  # Mount local source code for hot reload
+      - ./ChatHub:/src/ChatHub
     environment:
       - ASPNETCORE_ENVIRONMENT=Development
     depends_on:
