@@ -18,7 +18,8 @@ RUN dotnet publish "ChatHub.csproj" -c Release -o /app/publish
 
 # Dev stage (for development with dotnet watch)
 FROM build AS dev
-ENTRYPOINT ["dotnet", "watch", "--project", "./ChatHub/ChatHub.csproj","run", "--urls", "http://0.0.0.0:7192"]
+WORKDIR /src/ChatHub
+ENTRYPOINT ["dotnet", "watch", "run", "--urls", "http://0.0.0.0:7192"]
 
 # Final stage (for production)
 FROM base AS final
