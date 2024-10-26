@@ -24,7 +24,7 @@ const RoomList = () => {
 
     const createRoom = async (event) => {
         event.preventDefault();
-
+        useAuth();
         api.post('http://localhost:8080/room/create', {
             name: roomName,
             type: roomType,

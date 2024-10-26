@@ -10,16 +10,15 @@ public class ChatConnectDbContextFactory : IDesignTimeDbContextFactory<ChatConne
 	{
 		var basePath = GetBasePath();
 
-		var apiProjectPath =
-			Path.Combine(basePath, "ChatConnectAPI");
-		var appSettingsPath = Path.Combine(apiProjectPath, "appsettings.json");
+		var apiProjectPath = Path.Combine(basePath, "ChatConnectAPI");
+		var appSettingsPath = Path.Combine(apiProjectPath, "appsettings.Development.json");
 
 		var configuration = new ConfigurationBuilder()
 		                    .SetBasePath(apiProjectPath)
 		                    .AddJsonFile(appSettingsPath)
 		                    .Build();
 		var builder = new DbContextOptionsBuilder<ChatConnectDbContext>();
-		var connectionString = configuration.GetConnectionString("DefaultConnection");
+		var connectionString = configuration.GetConnectionString("DefaultConnectionForMigrations");
 		builder.UseMySql(connectionString ?? throw new InvalidOperationException(),
 			ServerVersion.AutoDetect(connectionString));
 
