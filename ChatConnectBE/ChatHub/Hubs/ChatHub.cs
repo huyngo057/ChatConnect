@@ -1,9 +1,8 @@
-﻿using ChatConnect.Models;
-using Microsoft.AspNetCore.SignalR;
+﻿using Microsoft.AspNetCore.SignalR;
 
 namespace ChatConnect.Hubs;
 
-public class ChatHub: Hub
+public class ChatHub : Hub
 {
 	private static readonly Dictionary<string, List<string>> _rooms = new();
 
@@ -12,10 +11,12 @@ public class ChatHub: Hub
 		await Groups.AddToGroupAsync(Context.ConnectionId, roomName);
 		if (!_rooms.ContainsKey(roomName))
 		{
-			_rooms[roomName] = new List<string>();	
+			_rooms[roomName] = new List<string>();
 		}
+
 		_rooms[roomName].Add(userName);
 		var systemMessage = $"{userName} has joined {roomName}";
+		Console.WriteLine("system message");
 		await Clients.Group(roomName).SendAsync("ReceiveSystemMessage", systemMessage);
 	}
 
@@ -23,6 +24,7 @@ public class ChatHub: Hub
 	{
 		if (_rooms.ContainsKey(roomName) && _rooms[roomName].Contains(userName))
 		{
+			Console.WriteLine("normal message");
 			await Clients.Group(roomName).SendAsync("ReceiveMessage", userName, message);
 		}
 		else
@@ -38,7 +40,7 @@ public class ChatHub: Hub
 			_rooms[roomName].Remove(userName);
 
 			await Groups.RemoveFromGroupAsync(Context.ConnectionId, roomName);
-			
+
 			await Clients.Group(roomName).SendAsync("ReceiveSystemMessage", $"{userName} has left the room.");
 		}
 	}

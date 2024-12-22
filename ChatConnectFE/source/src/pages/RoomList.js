@@ -12,6 +12,8 @@ const RoomList = () => {
     const [navigate, setNavigate] = useState(false);
     const [selectedRoom, setSelectedRoom] = useState(null);
     const [userName] = useState('User' + Math.floor(Math.random() * 1000));
+    useAuth();
+
     useEffect(() => {
         const fetchRooms = async () => {
             const response = await api.get('http://localhost:8080/room/all');
@@ -24,7 +26,6 @@ const RoomList = () => {
 
     const createRoom = async (event) => {
         event.preventDefault();
-        useAuth();
         api.post('http://localhost:8080/room/create', {
             name: roomName,
             type: roomType,
