@@ -16,7 +16,6 @@ public class ChatHub : Hub
 
 		_rooms[roomName].Add(userName);
 		var systemMessage = $"{userName} has joined {roomName}";
-		Console.WriteLine("system message");
 		await Clients.Group(roomName).SendAsync("ReceiveSystemMessage", systemMessage);
 	}
 
@@ -24,7 +23,6 @@ public class ChatHub : Hub
 	{
 		if (_rooms.ContainsKey(roomName) && _rooms[roomName].Contains(userName))
 		{
-			Console.WriteLine("normal message");
 			await Clients.Group(roomName).SendAsync("ReceiveMessage", userName, message);
 		}
 		else

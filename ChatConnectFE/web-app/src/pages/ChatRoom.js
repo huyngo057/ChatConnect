@@ -13,16 +13,20 @@ const ChatRoom = () => {
     const [messages, setMessages] = useState([]);
 
     useEffect(() => {
-        console.log('123');
-        signalRService.registerMessageHandler((userName, message) => {
+        const messageHandler = (userName, message) => {
             setMessages(prevMessages => [...prevMessages, { type: 'chat', content: `${userName}: ${message}` }]);
-        });
+        }
 
-        // signalRService.registerSystemMessageHandler((systemMessage) => {
-        //     setMessages(prevMessages => [...prevMessages, { type: 'system', content: `${systemMessage}` }]);
-        // });
+        const systemMessageHandler = (systemMessage) => {
+            setMessages(prevMessages => [...prevMessages, { type: 'system', content: `${systemMessage}` }]);
+        }
+
+        signalRService.registerMessageHandler(messageHandler);
+        signalRService.registerSystemMessageHandler(systemMessageHandler);
+
         return () => {
-            console.log('useEffect cleanup');
+            signalRService.unregisterMessageHandler(messageHandler);
+            signalRService.unregisterSystemMessageHandler(systemMessageHandler);
         };
     }, []);
 

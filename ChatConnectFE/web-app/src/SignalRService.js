@@ -45,10 +45,19 @@ class SignalRService {
         });
     }
 
+    unregisterMessageHandler(onMessageReceived) {
+        this.connection.off("ReceiveMessage", onMessageReceived);
+    }
+
+
     registerSystemMessageHandler(onSystemMessageReceived) {
         this.connection.on("ReceiveSystemMessage", (systemMessage) => {
             onSystemMessageReceived(systemMessage);
         })
+    }
+
+    unregisterSystemMessageHandler(onSystemMessageReceived) {
+        this.connection.off("ReceiveSystemMessage", onSystemMessageReceived);
     }
 
 }
