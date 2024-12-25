@@ -1,82 +1,37 @@
-using System.Text;
-using ChatConnectBE.Services;
+using ChatConnectBE.Extensions;
 using ChatConnectData;
-using ChatConnectData.Repositories;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Identity;
-using Microsoft.IdentityModel.Tokens;
 
 var builder = WebApplication.CreateBuilder(args);
-
-// Add services to the container.
-builder.Services.AddControllers();
-builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
-builder.Services.AddTransient<IRoomService, RoomService>();
-builder.Services.AddTransient<IRoomRepository, RoomRepository>();
-
-builder.Services.AddIdentity<IdentityUser, IdentityRole>()
-       .AddEntityFrameworkStores<ChatConnectDbContext>()
-       .AddDefaultTokenProviders();
-
-// Add JWT Authentication
-builder.Services.AddAuthentication(options =>
-{
-	options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
-	options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
-}).AddJwtBearer(options =>
-{
-	options.Events = new JwtBearerEvents
-	{
-		OnMessageReceived = context =>
-		{
-			var token = context.HttpContext.Request.Cookies["jwt"];
-			if (!string.IsNullOrEmpty(token))
-			{
-				context.Token = token;
-			}
-
-			return Task.CompletedTask;
-		}
-	};
-	options.TokenValidationParameters = new TokenValidationParameters
-	{
-		ValidateIssuer = true,
-		ValidateLifetime = true,
-		ValidateAudience = false,
-		ValidateIssuerSigningKey = true,
-		ValidIssuer = builder.Configuration["Jwt:Issuer"],
-		ValidAudience = builder.Configuration["Jwt:Audience"],
-		IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]!))
-	};
-});
-builder.Services.AddAuthorization();
-builder.Services.AddCors(options =>
-{
-	options.AddDefaultPolicy(
-		policyBuilder =>
-		{
-			var allowedOrigins = builder.Configuration.GetSection("CORS:AllowedOrigins").Get<string[]>();
-			if (allowedOrigins != null)
-				policyBuilder.WithOrigins(allowedOrigins)
-				             .AllowAnyHeader()
-				             .AllowCredentials();
-		});
-});
+var allowedOrigins = builder.Configuration.GetSection("CORS:AllowedOrigins").Get<string[]>();
+var jwtIssuer = builder.Configuration["Jwt:Issuer"];
+var jwtAudience = builder.Configuration["Jwt:Audience"] ?? "";
+var jwtKey = builder.Configuration["Jwt:Key"];
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
 
+if (string.IsNullOrEmpty(jwtIssuer) || string.IsNullOrEmpty(jwtKey))
+{
+	throw new InvalidOperationException("Missing JWT configuration values.");
+}
+
+// Add services to the container.
+builder.Services.ConfigureCoreServices();
+builder.Services.ConfigureServices();
+builder.Services.ConfigureIdentity();
+builder.Services.ConfigureJwtAuthentication(jwtIssuer, jwtAudience, jwtKey);
+
+builder.Services.ConfigureCors(allowedOrigins);
+builder.Services.AddAuthorization();
+
+// Add data services to the container
 if (string.IsNullOrEmpty(connectionString))
 {
 	Console.Error.WriteLine("Error: Connection string 'DefaultConnection' is not set.");
 	Environment.Exit(-1);
 }
+DatabaseServiceRegistrar.Register(builder.Services, connectionString);
 
-// Add data services to the container
-Ioc.ConfigureServices(builder.Services, connectionString);
-builder.Services.AddScoped<TokenService>();
 
 var app = builder.Build();
-
 if (app.Environment.IsDevelopment())
 {
 	app.UseSwagger();
