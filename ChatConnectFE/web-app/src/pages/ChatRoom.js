@@ -1,34 +1,17 @@
-import React, { useState, useEffect } from 'react';
+import React, {useState} from 'react';
 import {Navigate, useSearchParams} from 'react-router-dom';
 import { signalRService } from '../SignalRService';
 import {useAuth} from "../hooks/useAuth";
+import useSignalRHandlers from "../hooks/useSignalRHandlers";
 
 const ChatRoom = () => {
     useAuth();
     const [searchParams] = useSearchParams();
     const roomName = searchParams.get('roomName');
     const userName = searchParams.get('userName');
-
     const [message, setMessage] = useState('');
     const [messages, setMessages] = useState([]);
-
-    useEffect(() => {
-        const messageHandler = (userName, message) => {
-            setMessages(prevMessages => [...prevMessages, { type: 'chat', content: `${userName}: ${message}` }]);
-        }
-
-        const systemMessageHandler = (systemMessage) => {
-            setMessages(prevMessages => [...prevMessages, { type: 'system', content: `${systemMessage}` }]);
-        }
-
-        signalRService.registerMessageHandler(messageHandler);
-        signalRService.registerSystemMessageHandler(systemMessageHandler);
-
-        return () => {
-            signalRService.unregisterMessageHandler(messageHandler);
-            signalRService.unregisterSystemMessageHandler(systemMessageHandler);
-        };
-    }, []);
+    useSignalRHandlers(roomName, userName, setMessages);
 
     const sendMessage = () => {
         if (message.trim() !== '') {
