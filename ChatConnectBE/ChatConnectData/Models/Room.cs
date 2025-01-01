@@ -1,12 +1,18 @@
-﻿namespace ChatConnectData.Models;
+﻿using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using ChatConnectData.Enums;
 
-public class Room
+namespace ChatConnectData.Models;
+
+public class Room : BaseEntity<int>
 {
-	public int Id { get; set; }
+	[Required]
+	[MaxLength(300)]
+	public required string Name { get; set; }
+	
+	[MaxLength(20)]
+	public string Type { get; set; } = RoomType.Public;
 
-	public string Name { get; set; }
-
-	public string Type { get; set; }
-
-	public string Description { get; set; }
+	[MaxLength(500)]
+	public string Description { get; set; } = string.Empty;
 }

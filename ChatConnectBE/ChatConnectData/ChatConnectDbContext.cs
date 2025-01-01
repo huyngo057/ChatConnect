@@ -5,11 +5,8 @@ using Microsoft.EntityFrameworkCore;
 
 namespace ChatConnectData;
 
-public class ChatConnectDbContext : IdentityDbContext<IdentityUser>
+public class ChatConnectDbContext(DbContextOptions<ChatConnectDbContext> options)
+	: IdentityDbContext<IdentityUser>(options)
 {
-	public ChatConnectDbContext(DbContextOptions<ChatConnectDbContext> options) : base(options)
-	{
-	}
-
-	public DbSet<Room?> Rooms { get; set; }
+	public DbSet<Room> Rooms { get; set; }
 }
