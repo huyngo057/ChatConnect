@@ -4,6 +4,7 @@ using ChatConnectData;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace ChatConnectData.Migrations
 {
     [DbContext(typeof(ChatConnectDbContext))]
-    partial class ChatConnectContextModelSnapshot : ModelSnapshot
+    [Migration("20250101161003_AddCreatedAtAndUpdatedAtFields")]
+    partial class AddCreatedAtAndUpdatedAtFields
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

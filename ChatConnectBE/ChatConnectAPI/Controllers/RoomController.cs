@@ -1,4 +1,5 @@
 ﻿using ChatConnectBE.Requests;
+using ChatConnectBE.Requests.Room;
 using ChatConnectBE.Services;
 using ChatConnectData.Models;
 using Microsoft.AspNetCore.Authorization;
